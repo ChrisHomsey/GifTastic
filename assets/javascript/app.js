@@ -2,6 +2,8 @@
 
 var travelGifs = ['Peru', 'Thailand', 'Japan', 'Mexico', 'Hong Kong'];
 
+
+// Clears the buttons div and then populates it with new buttons from the travelGifs array
 function makeButtons(){
 	$('#buttons').empty();
 
@@ -14,7 +16,7 @@ function makeButtons(){
 	}
 }
 
-
+//When search-button is clicked, add the new location to the travelGifs array and run the makeButtons() function
 $('#search-button').click(function(){
 	travelGifs.push($('#search-field').val());
 	makeButtons();
@@ -32,8 +34,10 @@ function displayGif(){
 	query($(this).attr('data-name'));
 }
 
+// Anytime a .gif gets clicked in the #gifs-view, it will run changeGif();
 $('#gifs-view').on('click','.gif', changeGif);
 
+// Changes the state of a gif from still to active, and vice versa
 function changeGif(){
 	if ($(this).attr('data-state') === 'still'){
 		$(this).attr('src', $(this).attr('data-active'));
@@ -44,9 +48,9 @@ function changeGif(){
 		$(this).attr('data-state', 'still');
 		console.log('still');
 	}
-	
 }
 
+// Does our AJAX call based on the argument sent when our .gif-button was clicked and the query function was called
 function query(buttonClicked) {
 
 	var apiKey = 'aP6Fy47FRmXpwlyDMQopoPyhy7M5q1hB';
@@ -57,8 +61,11 @@ function query(buttonClicked) {
 		url: queryURL,
 		method: 'GET'
 	}).done(function(response){
+
+		// Empty the gif-view
 		$('#gifs-view').empty();
 
+		// Populate the gif view with dank travel gifs
 		for (i = 0; i < 10; i++) {
 			var div = $('<div>');
 			div.addClass('gif-div col-xs-12 col-sm-6 col-md-6 col-lg-4');
@@ -82,4 +89,5 @@ function query(buttonClicked) {
 
 }
 
+// initial populating of the #buttons div
 makeButtons();
